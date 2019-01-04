@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>pixijs</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script type="text/javascript" src="./js/pixi.min.js"></script>
+    <script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+
+my.load(['./images/bunny.png'], onComplete);
+
+function onComplete() {
+	app.renderer.resize(window.innerWidth, window.innerHeight);
+	init();
+}
+
+function init() {
+	var basicText = new PIXI.Text('基础文本');
+	app.stage.addChild(basicText);
+
+	var style = new PIXI.TextStyle({
+	    fontFamily: 'Arial',
+	    fontSize: 36,
+	    fontStyle: 'italic',
+	    fontWeight: 'bold',
+	    fill: ['#ffffff', '#00ff99'], // gradient
+	    stroke: '#4a1850',
+	    strokeThickness: 5,
+	    dropShadow: true,
+	    dropShadowColor: '#000000',
+	    dropShadowBlur: 4,
+	    dropShadowAngle: Math.PI / 6,
+	    dropShadowDistance: 6,
+	    wordWrap: true,
+	    wordWrapWidth: 840
+	});
+	var richText = new PIXI.Text('Rich text with a lot of options and across multiple lines', style);
+	richText.x = (app.screen.width - richText.width);
+	richText.y = (app.screen.height - richText.height);
+	app.stage.addChild(richText);
+
+	var middleStyle = new PIXI.TextStyle({
+	    fontSize: 100,
+	    fontWeight: 'bold',
+	    fill: ['#ff9900','#ff0000','0x330000'],
+	    stroke: '#cc3300',
+	    strokeThickness: 5,
+	    dropShadow: true,
+	    dropShadowColor: '#000000',
+	    dropShadowBlur: 10,
+	    dropShadowAngle: Math.PI / 6,
+	    dropShadowDistance: 0
+	});
+	var middleText = new PIXI.Text('中', middleStyle);
+	middleText.x = (app.screen.width - middleText.width)/2;
+	middleText.y = (app.screen.height - middleText.height)/2;
+	app.stage.addChild(middleText);
+
+	var count = 0;
+	setInterval(()=>{
+		middleText.text = '【'+(count++)+'】';
+		middleText.x = (app.screen.width - middleText.width)/2;
+		middleText.y = (app.screen.height - middleText.height)/2;
+	},30);
+}
+
+</script>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pixijs</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+
+my.load(['./images/bunny.png'], onComplete);
+
+function onComplete() {
+	var container = new PIXI.Container();
+	container.x = 100;
+	container.y = 100;
+	app.stage.addChild(container);
+
+	var texture = PIXI.loader.resources['./images/bunny.png'].texture;
+	var wh = 200;
+	var bunnyArr = [];
+	for (var i = 0; i < 50; i++) {
+	    var bunny = new PIXI.Sprite(texture);
+	    bunny.x = wh*Math.random();
+	    bunny.y = wh*Math.random();
+	    bunny.rotation = Math.random() * (Math.PI * 2);
+	    container.addChild(bunny);
+
+	    bunnyArr.push(bunny);
+	}
+
+	var brt = new PIXI.BaseRenderTexture(container.x + wh, container.y + wh, PIXI.SCALE_MODES.LINEAR, 1);
+	var rt = new PIXI.RenderTexture(brt);
+
+	var sprite = new PIXI.Sprite(rt);
+	sprite.x = container.x + wh + 100;
+	sprite.y = container.y;
+	app.stage.addChild(sprite);
+
+	app.ticker.add(function(delta) {
+		for(var k in bunnyArr){
+			bunnyArr[k].rotation += 0.1 * delta;
+			app.renderer.render(container, rt);
+		}
+	});
+}
+
+
+
+
+	
+</script>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Texture Swap</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+<script type="text/javascript">
+	var app = my.init();
+
+	my.load([
+		{name:'flowerTop', url:'./images/flowerTop.png'},
+		{name:'eggHead', url:'./images/eggHead.png'},
+	], (loader, resources)=>{
+
+		init(loader, resources);
+
+	});
+
+	function init(loader, resources) {
+		var texture = PIXI.Texture.fromImage('flowerTop');
+		var secondTexture = PIXI.Texture.fromImage('eggHead');
+		var bol = false;
+		var dude = new PIXI.Sprite(texture);
+		dude.anchor.set(0.5);
+		dude.x = app.screen.width / 2;
+		dude.y = app.screen.height / 2;
+		app.stage.addChild(dude);
+
+		dude.interactive = true;
+		dude.buttonMode = true;
+
+		dude.on('pointertap', function() {
+		    bol = !bol;
+		    if (bol) {
+		        dude.texture = secondTexture;
+		    }
+		    else {
+		        dude.texture = texture;
+		    }
+		});
+
+	}
+</script>

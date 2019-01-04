@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>pixijs</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script type="text/javascript" src="./js/pixi.min.js"></script>
+    <script type="text/javascript" src="./js/my.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+
+my.load(['./images/bunny.png'], onComplete);
+
+function onComplete() {
+	app.renderer.resize(window.innerWidth, window.innerHeight);
+
+	var tilingSprite = new PIXI.extras.TilingSprite(
+	    PIXI.loader.resources['./images/bunny.png'].texture,
+	    app.screen.width,
+	    app.screen.height
+	);
+	app.stage.addChild(tilingSprite);
+
+	var count = 0;
+	app.ticker.add(function() {
+	    count += 0.005;
+
+	    // tilingSprite.tileScale.x = 2 + Math.sin(count);
+	    // tilingSprite.tileScale.y = 2 + Math.cos(count);
+
+	    tilingSprite.tilePosition.x += 1;
+	    tilingSprite.tilePosition.y += 1;
+	});
+}
+
+</script>

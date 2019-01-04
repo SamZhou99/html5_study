@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>pixijs</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script type="text/javascript" src="./js/pixi.min.js"></script>
+    <script type="text/javascript" src="./js/my.js"></script>
+</head>
+
+<body onresize="resize()">
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+
+PIXI.loader
+    .add('./images/bunny.png')
+    .add('./images/logo.png')
+    .on("progress", loadProgressHandler)
+    .load(setup);
+
+function loadProgressHandler(loader, resource) {
+    console.log("loading: " + resource.url, "progress: " + loader.progress + "%");
+}
+
+var bunnyArr = [];
+var container = new PIXI.Container();
+app.stage.addChild(container);
+
+function setup() {
+    let logoSp = new PIXI.Sprite(PIXI.loader.resources['./images/logo.png'].texture);
+    container.addChild(logoSp);
+    for (var i = 0; i < 20; i++) {
+        let bunny = bunnySprite();
+        bunny.interactive = true;
+        bunny.buttonMode = true;
+        bunny.on('pointerdown', onClick);
+        container.addChild(bunny);
+
+        bunnyArr.push(bunny);
+    }
+    container.x = (app.screen.width - container.width) / 2;
+    container.y = (app.screen.height - container.height) / 2;
+
+    var graphics = new PIXI.Graphics();
+    graphics.lineStyle(2, 0x0000FF, 1);
+    // graphics.beginFill(0xFF700B, 0.3);
+    graphics.drawRect(0, 0, container.width, container.height);
+    // graphics.endFill();
+    container.addChild(graphics);
+
+    var txt = showText('Hello World!!!', textStyle());
+    txt.x   =container.width - txt.width;
+    txt.y   = container.height - txt.height;
+    container.addChild(txt);
+}
+
+function bunnySprite() {
+    var bunny = new PIXI.Sprite(PIXI.loader.resources['./images/bunny.png'].texture); //PIXI.Sprite.fromImage('./images/bunny.png');
+    bunny.x = (app.screen.width - 50) * Math.random();
+    bunny.y = (app.screen.height - 50) * Math.random();
+    bunny.anchor.set(0.5);
+    // bunny.pivot.set(32 * Math.random(), 32 * Math.random());
+    return bunny;
+}
+
+function onClick(e) {
+    console.log('sprite click ', e);
+}
+
+
+function showText(txt, style) {
+    var basicText = new PIXI.Text(txt, style);
+    return basicText;
+}
+
+function textStyle() {
+    var style = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 36,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        fill: ['#ffffff', '#00ff99'], // gradient
+        stroke: '#4a1850',
+        strokeThickness: 5,
+        dropShadow: true,
+        dropShadowColor: '#000000',
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+        wordWrap: true,
+        wordWrapWidth: 440
+    });
+    return style;
+}
+
+
+app.ticker.add(function(delta) {
+    for (var i = bunnyArr.length - 1; i >= 0; i--) {
+        var bunny = bunnyArr[i];
+        bunny.rotation += 0.1 * delta;
+    }
+});
+
+function resize() {
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+    // bunny.x = app.screen.width / 2;//app.renderer.view.width
+    // bunny.y = app.screen.height / 2;
+}
+
+resize();
+</script>

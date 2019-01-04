@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>pixijs</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script type="text/javascript" src="./js/pixi.min.js"></script>
+    <script type="text/javascript" src="./js/my.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+
+my.load(['./images/fighter.json', './images/logo.png'], onComplete);
+
+function onComplete() {
+	app.renderer.resize(window.innerWidth, window.innerHeight);
+
+	var frames = [];
+	for (var i=0; i<30; i++) {
+		var val = i < 10 ? '0' + i : i;
+		frames.push(PIXI.Texture.fromFrame('rollSequence00' + val + '.png'));
+	}
+	var anim = new PIXI.extras.AnimatedSprite(frames);
+
+	anim.x = app.screen.width / 2;
+    anim.y = app.screen.height / 2;
+    anim.anchor.set(0.5);
+    anim.animationSpeed = 0.5;
+    anim.play();
+
+    anim.interactive = true;
+    anim.buttonMode = true;
+    anim.on('pointerdown', onClick);
+
+    app.stage.addChild(anim);
+
+    // Animate the rotation
+    app.ticker.add(function() {
+        anim.rotation += 0.01;
+    });
+}
+
+function onClick(e) {
+	var target = e.currentTarget;
+	target.stop();
+	// target.play();
+}
+
+
+</script>

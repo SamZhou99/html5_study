@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pixijs</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/TweenLite.min.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+var app = my.init(0x1099bb);
+
+my.load(['./images/jetton.png'], onComplete);
+
+function onComplete() {
+
+	for(var i=0; i<500; i++){
+		showJetton(i);
+	}
+
+}
+
+function showJetton(i) {
+	var jetton = new PIXI.Sprite(PIXI.loader.resources['./images/jetton.png'].texture);
+	jetton.scale.set(0.5);
+	app.stage.addChild(jetton);
+	
+	tween(jetton);
+}
+
+function tween(obj) {
+	var sw = app.screen.width;
+	var sh = app.screen.height;
+	obj.x = sw / 2;
+	obj.y = sh / 2;
+	var tweenObj = {
+		x:sw*Math.random()-obj.width,
+		y:sh*Math.random()-obj.height,
+		width: obj.width*2,
+		height: obj.height*2,
+		ease: Power2.easeInOut,
+		// ease: Power2.backInOut,
+		delay: 2*Math.random(),
+		repeat: 2,
+		onComplete: function () {
+			//console.log('complete...');
+		}
+	};
+	TweenLite.to(obj, 0.5+Math.random(), tweenObj);
+}
+
+
+	
+</script>

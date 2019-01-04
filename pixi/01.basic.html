@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pixijs</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body onresize="resize()">
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var app = my.init(0x1099bb);
+
+	var bunny = PIXI.Sprite.fromImage('./images/bunny.png');
+	bunny.anchor.set(0.5); //这个是0-1，与pivot功能一样（像素）
+	// bunny.pivot.set(32);
+	bunny.interactive = true;
+	bunny.buttonMode = true;
+	bunny
+        .on('pointerdown', onDragStart)
+        .on('pointerup', onDragEnd)
+        .on('pointerupoutside', onDragEnd)
+        .on('pointermove', onDragMove);
+
+
+    function onDragStart(event) {
+	    this.data = event.data;
+	    this.alpha = 0.5;
+	    this.dragging = true;
+	}
+
+	function onDragEnd() {
+	    this.alpha = 1;
+	    this.dragging = false;
+	    this.data = null;
+	}
+
+	function onDragMove() {
+	    if (this.dragging) {
+	        var newPosition = this.data.getLocalPosition(this.parent);
+	        this.x = newPosition.x;
+	        this.y = newPosition.y;
+	    }
+	}
+
+
+
+
+	app.stage.addChild(bunny);
+	app.ticker.add(function(delta) {
+		bunny.rotation += 0.1 * delta;
+	});
+
+	function resize() {
+		app.renderer.resize(window.innerWidth, window.innerHeight);
+		bunny.x = app.screen.width / 2;//app.renderer.view.width
+		bunny.y = app.screen.height / 2;
+	}
+
+	resize();
+</script>

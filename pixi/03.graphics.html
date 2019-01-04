@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>pixijs</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script type="text/javascript" src="./js/pixi.min.js"></script>
+    <script type="text/javascript" src="./js/my.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+my.load(['./images/bunny.png'], onComplete);
+
+function onComplete() {
+	app.renderer.resize(window.innerWidth, window.innerHeight);
+	init();
+}
+
+function init() {
+	var graphics = new PIXI.Graphics();
+	graphics.lineStyle(4, 0xffd900, 1);
+	graphics.beginFill(0xFF700B, 1);
+	graphics.drawRect(50, 250, 120, 120);
+	graphics.endFill();	
+	app.stage.addChild(graphics);
+
+	//drawA(graphics);
+	drawB();
+}
+
+function drawA(g) {
+
+	var target = g;
+	var dd = new PIXI.Graphics();
+	dd.beginFill(0xFFFF0B, 1);
+	dd.drawCircle(470, 90,60);
+	dd.endFill();
+	app.stage.addChild(dd);
+
+	target.interactive = true;
+	target.buttonMode = true;
+
+	target.on('pointerdown', (e)=>{
+		let gx = e.data.global.x;
+		let gy = e.data.global.y;
+		dd.lineStyle(4, 0xff0000, 1);
+		dd.moveTo(gx, gy);
+		target.on('pointermove', onMouseMove);
+	});
+	target.on('pointerup', (e)=>{
+		target.off('pointermove', onMouseMove);
+	});
+
+	function onMouseMove(e) {
+		let gx = e.data.global.x;
+		let gy = e.data.global.y;
+		dd.lineTo(gx, gy);
+		// console.log('move', gx, gy);
+	}
+}
+
+
+function drawB() {
+	var dd = new PIXI.Graphics();
+	app.stage.addChild(dd);
+
+	dd.lineStyle(2, 0xFF0000, 1);
+	//dd.beginFill(0x00FF00, 1);
+	
+	
+
+	//dd.endFill();
+
+	var ox=50,oy=50;
+	var x = app.screen.width * Math.random();
+	var y = app.screen.height * Math.random();
+	setInterval(()=>{
+		dd.lineStyle(20, 0xFFFFFF*Math.random(), 1);
+		dd.moveTo(x, y);
+		x = x+ox*Math.random();
+		y = y+oy*Math.random();
+		dd.lineTo(x, y);
+		if (x>app.screen.width || x < 0){
+			x -= x;
+		}
+		if (y>app.screen.height || y < 0){
+			y -= y;
+		}
+	}, 10);
+}
+
+</script>

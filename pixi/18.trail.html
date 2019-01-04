@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>trail</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/pixi-layers.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	var app = my.init(0x1099bb);
+
+	my.load([{name:'bunny', url:'./images/bunny.png'}], (load, res)=>{
+		app.stage = new PIXI.display.Stage();
+
+		var layer = new PIXI.display.Layer();
+		layer.useRenderTexture = true;
+		layer.useDoubleBuffer = true;
+		var trailSprite = new PIXI.Sprite(layer.getRenderTexture());
+		trailSprite.alpha = 0.9;
+		layer.addChild(trailSprite);
+		app.stage.addChild(layer);
+
+		
+		var showLayer = new PIXI.Sprite(layer.getRenderTexture());
+		app.stage.addChild(showLayer);
+
+
+		var bunnyTex = PIXI.Texture.fromImage('bunny');
+		var bunnies = [];
+		var len = 3;
+		for (var i=0; i<len; i++) {
+		    bunnies[i] = new PIXI.Container();
+		    bunnies[i].position.set(app.screen.width/2, app.screen.height/2);
+		    bunnies[i].rotation = (i / len) * (Math.PI * 2);
+		    bunnies[i].pivot.set(0, -200);
+
+		    var sprite = new PIXI.Sprite(bunnyTex);
+		    bunnies[i].addChild(sprite);
+		    sprite.anchor.set(0.5);
+		    sprite.scale.set(2 + Math.random());
+
+		    layer.addChild(bunnies[i]);
+		}
+
+		app.ticker.add(function(delta) {
+		    for (var i=0;i<bunnies.length;i++) {
+		        bunnies[i].rotation += 0.05 * delta;
+		        bunnies[i].children[0].rotation += 0.01 * delta;
+		    }
+		});
+
+
+	});
+</script>

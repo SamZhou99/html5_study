@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pixijs</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/pixi-tween.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+
+my.load(['./images/jetton.png'], onComplete);
+
+function onComplete() {
+
+	for(var i=0; i<500; i++){
+		showJetton(i);
+	}
+
+	app.ticker.add(function(delta) {
+		PIXI.tweenManager.update();
+	});
+}
+
+function showJetton(i) {
+	var jetton = new PIXI.Sprite(PIXI.loader.resources['./images/jetton.png'].texture);
+	jetton.scale.set(0.5);
+	app.stage.addChild(jetton);
+	tween(jetton, {
+		x:app.screen.width*Math.random()-jetton.width,
+		y:app.screen.height*Math.random()-jetton.height,
+		width: jetton.width*2,
+		height: jetton.height*2,
+	});
+}
+
+function tween(obj, tweenObj) {
+	var tween = PIXI.tweenManager.createTween(obj);
+	tween.stop().clear();
+	tween.time = 500 + Math.random()*1000;
+    tween.easing = PIXI.tween.Easing.inOutQuad();
+    tween.from({x:app.screen.width/2, y:app.screen.height/2});
+    tween.to(tweenObj);
+    // tween.loop = true;
+    tween.start();
+}
+
+
+	
+</script>

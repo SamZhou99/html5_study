@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Interactivity</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+<script type="text/javascript">
+	var app = my.init();
+	
+	my.load([
+		{name:'btn', url:'./images/button.png'},
+		{name:'btnDown', url:'./images/buttonDown.png'},
+		{name:'btnOver', url:'./images/buttonOver.png'},
+	], (loader, resources)=>{
+
+		console.log(resources);
+
+		let btn = PIXI.Texture.fromImage('btn');
+		let btnDown = PIXI.Texture.fromImage('btnDown');
+		let btnOver = PIXI.Texture.fromImage('btnOver');
+
+		var button = new PIXI.Sprite(btn);
+		button.anchor.set(0.5);
+		button.interactive = true;
+    	button.buttonMode = true;
+    	button.x = parseInt((app.screen.width - button.width) * Math.random());
+		button.y = parseInt((app.screen.height - button.height) * Math.random());
+		console.log(button.x, button.y);
+    	app.stage.addChild(button);
+
+    	button
+    	.on('pointerdown', onButtonDown)
+        .on('pointerup', onButtonUp)
+        .on('pointerupoutside', onButtonUp)
+        .on('pointerover', onButtonOver)
+        .on('pointerout', onButtonUp);
+
+
+        function onButtonDown() {
+        	this.texture = btnDown;
+        }
+
+        function onButtonUp() {
+        	this.texture = btn;
+        }
+
+        function onButtonOver() {
+        	this.texture = btnOver;
+        }
+
+
+
+
+	});
+</script>
