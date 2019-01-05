@@ -1,5 +1,5 @@
 var my = {
-	init(backgroundColor=0x000000, ){
+	init(backgroundColor=0x000000){
 		var app = new PIXI.Application(1, 1, {
 			backgroundColor : backgroundColor,
 			antialias: true,
