@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+	<script type="text/javascript" src="./js/pixi.min.js"></script>
+	<script type="text/javascript" src="./js/my.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	var app = my.init(0x1099bb);
+
+	my.load([{name:'bunny', url:'./images/bunny.png'}], (load, res)=>{
+		
+		let button = new PIXI.Sprite(PIXI.loader.resources['bunny'].texture);
+		button.interactive = true;
+    	button.buttonMode = true;
+    	app.stage.addChild(button);
+
+    	button.on('pointerdown', onButtonDown);
+
+    	function onButtonDown(e) {
+    		button.destroy();
+
+    		var texture = PIXI.Texture.fromVideo('./images/test.mp4');
+    		var videoSprite = new PIXI.Sprite(texture);
+    		videoSprite.width = 640;
+    		videoSprite.height = 360;
+    		app.stage.addChild(videoSprite);
+    	}
+	});
+</script>

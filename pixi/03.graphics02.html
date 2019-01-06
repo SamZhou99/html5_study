@@ -3,8 +3,10 @@
 
 <head>
     <title>pixijs</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
-    <script type="text/javascript" src="./js/pixi.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="./js/pixi.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="./js/my.js"></script>
 </head>
 
@@ -23,34 +25,27 @@
 
 <script type="text/javascript">
 
-var sw = window.innerWidth;
-var sh = window.innerHeight;
-console.log(sw, sh);
-
-var app = new PIXI.Application(sw, sh, {
-	backgroundColor : 0x1099bb,
-	antialias: true,
-	transparent: false
-});
-app.renderer.autoResize = true;
-app.renderer.resize(sw, sh);
-document.body.appendChild(app.view);
+var app = my.init(0x1099bb);
 
 var stage = new PIXI.Container();
 app.stage.addChild(stage);
+
+var sw = window.innerWidth;
+var sh = window.innerHeight;
 var bg = new PIXI.Graphics();
 bg.beginFill(0x00FF00, 0);
 bg.drawRect(0, 0, sw, sh);
 bg.endFill();
 bg.interactive = true;
 bg.buttonMode = true;
+bg.cursor = 'wait';
 bg.on('mousedown', onMouseDown);
 stage.addChild(bg);
 
 var tp = {x:0, y:0};
 var mp = {x:0, y:0};
 var g = new PIXI.Graphics();
-g.lineStyle(4, 0x996633, 1);
+g.lineStyle(10, randomColor(), 1);
 stage.addChild(g);
 
 
@@ -80,12 +75,15 @@ function onMouseUp(e) {
     bg.off('mouseup', onMouseUp);
 }
 
-function distance(p1, p2) {
-	// let xdiff = p2.x-p1.x;
-	// let ydiff = p2.y-p1.y;
+function distance(sp, ep) {
+	// let xdiff = ep.x-sp.x;
+	// let ydiff = ep.y-sp.y;
 	// return Math.pow((xdiff * xdiff + ydiff * ydiff), 0.5);
-	return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y)); 
+	return Math.sqrt((sp.x-ep.x)*(sp.x-ep.x)+(sp.y-ep.y)*(sp.y-ep.y)); 
 }
 
-
+function randomColor() {
+	let c = [0xBB0000,0x00AA00,0x0000CC,0x99FF00,0xFF0099,0x00FF99,0x993300,0x990FF0,0x990000];
+	return c[Math.floor(c.length*Math.random())];
+}
 </script>
