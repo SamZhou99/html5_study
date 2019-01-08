@@ -48,6 +48,8 @@ var g = new PIXI.Graphics();
 g.lineStyle(10, randomColor(), 1);
 stage.addChild(g);
 
+var basicText = new PIXI.Text('鼠标画线');
+app.stage.addChild(basicText);
 
 function onMouseDown(e) {
 	// let mg = app.renderer.plugins.interaction.mouse.global;

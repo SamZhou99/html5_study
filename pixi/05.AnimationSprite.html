@@ -22,17 +22,17 @@
 
 
 <script type="text/javascript">
-var app = my.init(0x1099bb);
+var app = my.init(0x000000);
+app.stop();
 
-my.load(['./images/fighter.json', './images/logo.png'], onComplete);
+my.load([['', 'images/mc.json']], onComplete);
 
 function onComplete() {
 	app.renderer.resize(window.innerWidth, window.innerHeight);
 
 	var frames = [];
-	for (var i=0; i<30; i++) {
-		var val = i < 10 ? '0' + i : i;
-		frames.push(PIXI.Texture.fromFrame('rollSequence00' + val + '.png'));
+	for (var i=1; i<26; i++) {
+		frames.push(PIXI.Texture.fromFrame('Explosion_Sequence_A ' + i + '.png'));
 	}
 	var anim = new PIXI.extras.AnimatedSprite(frames);
 
@@ -40,7 +40,8 @@ function onComplete() {
     anim.y = app.screen.height / 2;
     anim.anchor.set(0.5);
     anim.animationSpeed = 0.5;
-    anim.play();
+    anim.gotoAndPlay(Math.floor(Math.random()*26+1));
+    // anim.play();
 
     anim.interactive = true;
     anim.buttonMode = true;
@@ -48,10 +49,7 @@ function onComplete() {
 
     app.stage.addChild(anim);
 
-    // Animate the rotation
-    app.ticker.add(function() {
-        anim.rotation += 0.01;
-    });
+    app.start();
 }
 
 function onClick(e) {
@@ -61,7 +59,7 @@ function onClick(e) {
         target.stop();
         return;
     }
-	
+
 	target.play();
 }
 
