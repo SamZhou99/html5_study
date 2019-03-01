@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="PageStartSkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16938d26e04" ></w:Config>
+	<e:Image width="100%" height="100%" x="0" y="0" source="bg01_jpg" anchorOffsetX="0" anchorOffsetY="0"/>
+	<e:TextInput id="nickname_txt" width="220" height="60" y="639" anchorOffsetX="0" anchorOffsetY="0"  horizontalCenter="0"/>
+	<e:Button id="start_btn" label="快速开始" y="726" anchorOffsetX="0" width="220" anchorOffsetY="0" height="60" horizontalCenter="0"/>
+	<e:Label text="输入昵称" y="599" horizontalCenter="0"/>
+</e:Skin>
