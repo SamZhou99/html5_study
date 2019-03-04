@@ -46,7 +46,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.loginPage = new PageStart();
+        _this.gamePage = new PageGame();
+        return _this;
     }
     Main.prototype.createChildren = function () {
         _super.prototype.createChildren.call(this);
@@ -77,12 +80,15 @@ var Main = (function (_super) {
                     case 1:
                         _a.sent();
                         this.createGameScene();
-                        return [4 /*yield*/, RES.getResAsync("description_json")];
+                        return [4 /*yield*/, RES.getResAsync("description_json")
+                            // this.startAnimation(result);
+                        ];
                     case 2:
                         result = _a.sent();
-                        this.startAnimation(result);
+                        // this.startAnimation(result);
                         return [4 /*yield*/, platform.login()];
                     case 3:
+                        // this.startAnimation(result);
                         _a.sent();
                         return [4 /*yield*/, platform.getUserInfo()];
                     case 4:
@@ -138,122 +144,148 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        var sky = this.createBitmapByName("bg01_jpg");
-        this.addChild(sky);
-        var stageW = this.stage.stageWidth;
-        var stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
-        var topMask = new egret.Shape();
-        topMask.graphics.beginFill(0x000000, 0.5);
-        topMask.graphics.drawRect(0, 0, stageW, 172);
-        topMask.graphics.endFill();
-        topMask.y = 33;
-        this.addChild(topMask);
-        var icon = this.createBitmapByName("egret_icon_png");
-        this.addChild(icon);
-        icon.x = 26;
-        icon.y = 33;
-        var line = new egret.Shape();
-        line.graphics.lineStyle(2, 0xffffff);
-        line.graphics.moveTo(0, 0);
-        line.graphics.lineTo(0, 117);
-        line.graphics.endFill();
-        line.x = 172;
-        line.y = 61;
-        this.addChild(line);
-        var colorLabel = new egret.TextField();
-        colorLabel.textColor = 0xffffff;
-        colorLabel.width = stageW - 172;
-        colorLabel.textAlign = "center";
-        colorLabel.text = "Hello Egret";
-        colorLabel.size = 24;
-        colorLabel.x = 172;
-        colorLabel.y = 80;
-        this.addChild(colorLabel);
-        var textfield = new egret.TextField();
-        this.addChild(textfield);
-        textfield.alpha = 0;
-        textfield.width = stageW - 172;
-        textfield.textAlign = egret.HorizontalAlign.CENTER;
-        textfield.size = 24;
-        textfield.textColor = 0xffffff;
-        textfield.x = 172;
-        textfield.y = 135;
-        this.textfield = textfield;
-        var button = new eui.Button();
-        button.label = "Click!";
-        button.horizontalCenter = 0;
-        button.verticalCenter = 0;
-        this.addChild(button);
-        button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
-        var pageStart = new PageStart();
-        this.addChild(pageStart);
+        // let sky = this.createBitmapByName("bg01_jpg");
+        // this.addChild(sky);
+        // let stageW = this.stage.stageWidth;
+        // let stageH = this.stage.stageHeight;
+        // sky.width = stageW;
+        // sky.height = stageH;
+        // let topMask = new egret.Shape();
+        // topMask.graphics.beginFill(0x000000, 0.5);
+        // topMask.graphics.drawRect(0, 0, stageW, 172);
+        // topMask.graphics.endFill();
+        // topMask.y = 33;
+        // this.addChild(topMask);
+        // let icon: egret.Bitmap = this.createBitmapByName("egret_icon_png");
+        // this.addChild(icon);
+        // icon.x = 26;
+        // icon.y = 33;
+        // let line = new egret.Shape();
+        // line.graphics.lineStyle(2, 0xffffff);
+        // line.graphics.moveTo(0, 0);
+        // line.graphics.lineTo(0, 117);
+        // line.graphics.endFill();
+        // line.x = 172;
+        // line.y = 61;
+        // this.addChild(line);
+        // let colorLabel = new egret.TextField();
+        // colorLabel.textColor = 0xffffff;
+        // colorLabel.width = stageW - 172;
+        // colorLabel.textAlign = "center";
+        // colorLabel.text = "Hello Egret";
+        // colorLabel.size = 24;
+        // colorLabel.x = 172;
+        // colorLabel.y = 80;
+        // this.addChild(colorLabel);
+        // let textfield = new egret.TextField();
+        // this.addChild(textfield);
+        // textfield.alpha = 0;
+        // textfield.width = stageW - 172;
+        // textfield.textAlign = egret.HorizontalAlign.CENTER;
+        // textfield.size = 24;
+        // textfield.textColor = 0xffffff;
+        // textfield.x = 172;
+        // textfield.y = 135;
+        // this.textfield = textfield;
+        // let button = new eui.Button();
+        // button.label = "Click!";
+        // button.horizontalCenter = 0;
+        // button.verticalCenter = 0;
+        // this.addChild(button);
+        // button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
+        this.pageSp = new egret.Sprite();
+        this.addChild(this.pageSp);
+        this.initEvent();
         this.initSocketIO();
+        MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_LOGIN_PAGE, {}));
     };
-    /**
-     * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
-     * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
-     */
-    Main.prototype.createBitmapByName = function (name) {
-        var result = new egret.Bitmap();
-        var texture = RES.getRes(name);
-        result.texture = texture;
-        return result;
+    // /**
+    //  * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
+    //  * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
+    //  */
+    // private createBitmapByName(name: string): egret.Bitmap {
+    //     let result = new egret.Bitmap();
+    //     let texture: egret.Texture = RES.getRes(name);
+    //     result.texture = texture;
+    //     return result;
+    // }
+    // /**
+    //  * 描述文件加载成功，开始播放动画
+    //  * Description file loading is successful, start to play the animation
+    //  */
+    // private startAnimation(result: Array<any>): void {
+    //     let parser = new egret.HtmlTextParser();
+    //     let textflowArr = result.map(text => parser.parse(text));
+    //     let textfield = this.textfield;
+    //     let count = -1;
+    //     let change = () => {
+    //         count++;
+    //         if (count >= textflowArr.length) {
+    //             count = 0;
+    //         }
+    //         let textFlow = textflowArr[count];
+    //         // 切换描述内容
+    //         // Switch to described content
+    //         textfield.textFlow = textFlow;
+    //         let tw = egret.Tween.get(textfield);
+    //         tw.to({ "alpha": 1 }, 200);
+    //         tw.wait(2000);
+    //         tw.to({ "alpha": 0 }, 200);
+    //         tw.call(change, this);
+    //     };
+    //     change();
+    // }
+    // /**
+    //  * 点击按钮
+    //  * Click the button
+    //  */
+    // private onButtonClick(e: egret.TouchEvent) {
+    //     MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_ALERT, {text:'Title'}));
+    // }
+    Main.prototype.initEvent = function () {
+        MainEvent.DIS.addEventListener(MainEvent.SHOW_ALERT, this.showAlert, this);
+        MainEvent.DIS.addEventListener(MainEvent.CLOSE_ALERT, this.closeAlert, this);
+        MainEvent.DIS.addEventListener(MainEvent.SHOW_LOGIN_PAGE, this.showLoginPage, this);
+        MainEvent.DIS.addEventListener(MainEvent.SHOW_GAME_PAGE, this.showGamePage, this);
     };
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
-    Main.prototype.startAnimation = function (result) {
-        var _this = this;
-        var parser = new egret.HtmlTextParser();
-        var textflowArr = result.map(function (text) { return parser.parse(text); });
-        var textfield = this.textfield;
-        var count = -1;
-        var change = function () {
-            count++;
-            if (count >= textflowArr.length) {
-                count = 0;
-            }
-            var textFlow = textflowArr[count];
-            // 切换描述内容
-            // Switch to described content
-            textfield.textFlow = textFlow;
-            var tw = egret.Tween.get(textfield);
-            tw.to({ "alpha": 1 }, 200);
-            tw.wait(2000);
-            tw.to({ "alpha": 0 }, 200);
-            tw.call(change, _this);
-        };
-        change();
+    Main.prototype.showAlert = function (e) {
+        this.panel = new eui.Panel();
+        this.panel.title = e.parameter.text;
+        this.panel.horizontalCenter = 0;
+        this.panel.verticalCenter = 0;
+        this.addChild(this.panel);
     };
-    /**
-     * 点击按钮
-     * Click the button
-     */
-    Main.prototype.onButtonClick = function (e) {
-        this.showAlert('Title');
+    Main.prototype.closeAlert = function () {
+        if (this.panel) {
+            this.removeChild(this.panel);
+            this.panel = null;
+        }
     };
-    Main.prototype.showAlert = function (text) {
-        var panel = new eui.Panel();
-        panel.title = text;
-        panel.horizontalCenter = 0;
-        panel.verticalCenter = 0;
-        this.addChild(panel);
+    Main.prototype.showLoginPage = function (e) {
+        this.clearPage();
+        this.pageSp.addChild(this.loginPage);
+    };
+    Main.prototype.showGamePage = function (e) {
+        this.clearPage();
+        this.pageSp.addChild(this.gamePage);
+    };
+    Main.prototype.clearPage = function () {
+        var len = this.pageSp.numChildren;
+        for (var i = len - 1; i >= 0; i--) {
+            this.pageSp.removeChildAt(i);
+        }
     };
     Main.prototype.initSocketIO = function () {
-        var _this = this;
         var self = this;
         this.socket = io.connect('http://127.0.0.1:3000/room');
         this.socket.on('connect', function () {
-            _this.showAlert('链接成功');
+            MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_ALERT, { text: '链接成功' }));
         });
         this.socket.on('disconnect', function () {
-            _this.showAlert('链接断开');
+            MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_ALERT, { text: '链接断开' }));
         });
         this.socket.on('error', function () {
-            _this.showAlert('链接失败');
+            MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_ALERT, { text: '链接失败' }));
         });
         this.socket.on('news', function (data) {
             self.trace("receive message: " + data);
