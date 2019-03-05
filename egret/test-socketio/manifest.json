@@ -9,12 +9,15 @@
 		"libs/modules/socket.io/socket.io.js"
 	],
 	"game": [
+		"bin-debug/ThemeAdapter.js",
 		"bin-debug/AssetAdapter.js",
-		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
 		"bin-debug/MainEvent.js",
 		"bin-debug/Platform.js",
-		"bin-debug/ThemeAdapter.js",
+		"bin-debug/LoadingUI.js",
+		"bin-debug/common/utils.js",
+		"bin-debug/member/MemberInfo.js",
+		"bin-debug/page/MoneyPool.js",
 		"bin-debug/page/PageGame.js",
 		"bin-debug/page/PageStart.js"
 	]

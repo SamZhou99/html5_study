@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="MoneyPoolSkin" width="110" height="40" xmlns:e="http://ns.egret.com/eui"
+        xmlns:w="http://ns.egret.com/wing">
+	<w:Config id="1694d1d705c"></w:Config>
+	<e:Group width="100%" height="100%">
+		<e:Image id="iconImg" width="30" height="30" source="jetton01_png" x="5" y="5" />
+		<e:Label id="moneyTxt" text="0.00" size="14" fontFamily="Verdana" stroke="1"  x="50" y="13"/>
+	</e:Group>
+</e:Skin>

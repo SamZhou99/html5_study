@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,bg01_jpg,bg02_jpg,pk01_jpg,pk_json",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,egret_icon_png,description_json,bg01_jpg,bg02_jpg,pk_json,user01_jpg,jetton01_png",
 			"name": "preload"
 		}
 	],
@@ -142,20 +142,20 @@
 			"name": "bg02_jpg"
 		},
 		{
-			"url": "assets/pk01.jpg",
-			"type": "image",
-			"name": "pk01_jpg"
-		},
-		{
-			"url": "assets/pk02.png",
-			"type": "image",
-			"name": "pk02_png"
-		},
-		{
 			"name": "pk_json",
 			"type": "sheet",
 			"url": "assets/pk.json",
 			"subkeys": "a01,a02,a03,a04,a05,a06,a07,a08,a09,a10,a11,a12,a13,b01,b02,b03,b04,b05,b06,b07,b08,b09,b10,b11,b12,b13,c01,c02,c03,c04,c05,c06,c07,c08,c09,c10,c11,c12,c13,d01,d02,d03,d04,d05,d06,d07,d08,d09,d10,d11,d12,d13,pk_big,pk_little,pk_reverse"
+		},
+		{
+			"name": "user01_jpg",
+			"type": "image",
+			"url": "assets/user01.jpg"
+		},
+		{
+			"name": "jetton01_png",
+			"type": "image",
+			"url": "assets/jetton01.png"
 		}
 	]
 }

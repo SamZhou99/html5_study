@@ -14,7 +14,9 @@
 		"eui.VSlider": "resource/eui_skins/VSliderSkin.exml",
 		"eui.ItemRenderer": "resource/eui_skins/ItemRendererSkin.exml",
 		"PageStart": "resource/eui_skins/PageStart.exml",
-		"PageGame": "resource/eui_skins/PageGame.exml"
+		"PageGame": "resource/eui_skins/PageGame.exml",
+		"MemberInfo": "resource/eui_skins/MemberInfo.exml",
+		"MoneyPool": "resource/eui_skins/MoneyPool.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -23,6 +25,8 @@
 		"resource/eui_skins/HScrollBarSkin.exml",
 		"resource/eui_skins/HSliderSkin.exml",
 		"resource/eui_skins/ItemRendererSkin.exml",
+		"resource/eui_skins/MemberInfo.exml",
+		"resource/eui_skins/MoneyPool.exml",
 		"resource/eui_skins/PageGame.exml",
 		"resource/eui_skins/PageStart.exml",
 		"resource/eui_skins/PanelSkin.exml",

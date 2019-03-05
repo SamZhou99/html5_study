@@ -30,6 +30,7 @@ var PageStart = (function (_super) {
     };
     PageStart.prototype.init = function () {
         this.nickname_txt.prompt = '提示文字';
+        this.nickname_txt.text = common.utils.GetRandomName();
         this.start_btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
     };
     PageStart.prototype.onTouchTap = function () {

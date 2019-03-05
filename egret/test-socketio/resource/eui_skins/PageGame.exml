@@ -2,4 +2,12 @@
 <e:Skin class="PageGameSkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<w:Config id="169476ead0f" ></w:Config>
 	<e:Image width="100%" height="100%" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" source="bg02_jpg"/>
+	<!--<e:Label id="l0" text="Label" y="0" x="283"/>
+	<e:Label id="l1" text="Label" y="190" x="566"/>
+	<e:Label id="l2" text="Label" y="400" x="566"/>
+	<e:Label id="l3" text="Label" y="610" x="566"/>
+	<e:Label id="l4" text="Label" x="283" y="786"/>
+	<e:Label id="l5" text="Label" y="610"/>
+	<e:Label id="l6" text="Label" y="400"/>
+	<e:Label id="l7" text="Label" y="190"/>-->
 </e:Skin>

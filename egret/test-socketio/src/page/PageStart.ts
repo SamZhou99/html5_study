@@ -29,18 +29,22 @@ class PageStart extends eui.Component implements eui.UIComponent {
 
 	private init() {
 		this.nickname_txt.prompt = '提示文字';
+		this.nickname_txt.text = common.utils.GetRandomName();
 		this.start_btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
 	}
 	private onTouchTap() {
 		let nickName = this.nickname_txt.text.trim();
-		if(!nickName){
-			MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_ALERT, {text:'请填写昵称'}));
-			return ;
+		if (!nickName) {
+			MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_ALERT, { text: '请填写昵称' }));
+			return;
 		}
-		
+
 		MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_GAME_PAGE, {}));
 	}
 
 
+
+
+	
 
 }
