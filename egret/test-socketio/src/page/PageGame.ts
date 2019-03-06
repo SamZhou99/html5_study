@@ -68,6 +68,7 @@ class PageGame extends eui.Component implements eui.UIComponent {
 			this.addChild(memberInfo);
 
 			memberInfo.setInfo({ nickName: common.utils.GetRandomName(), money:Math.floor(Math.random()*999999) });
+			memberInfo.startTime();
 		}
 	}
 

@@ -6,17 +6,32 @@ class DrawCircle extends egret.Sprite {
 		this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.onRemove, this);
 	}
 
+	private shp: egret.Shape;
 	private onAdd() {
-		var shp: egret.Shape = new egret.Shape();
-		shp.graphics.beginFill(0x1122cc);
-		shp.graphics.drawArc(200, 200, 100, 0, 0.7853981633974483, true);
-		shp.graphics.endFill();
-		this.addChild(shp);
+		this.shp = new egret.Shape();
+		this.addChild(this.shp);
+
+		let i = 0;
+		setInterval(()=>{
+			this.dr(i);
+			i++;
+			if(i>=360){
+				i=0;
+			}
+		},10);
 	}
 	private onRemove() {
 		//
 	}
 
-
+	
+	private dr(r){
+		this.shp.graphics.clear();
+		this.shp.graphics.lineStyle(4, 0x000000);
+		// this.shp.graphics.beginFill(0x1122cc);
+		this.shp.graphics.drawArc(100, 100, 100, 0, Math.PI/180*r, false);
+		// this.shp.graphics.endFill();
+		
+	}
 
 }
