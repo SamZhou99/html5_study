@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>pixijs</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script type="text/javascript" src="./js/pixi.js"></script>
+    <script type="text/javascript" src="./js/my.js"></script>
+</head>
+
+<body onresize="resize()">
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var app = my.init(0x1099bb);
+var shakeNum = 1;
+var mouseDownStatus = false;
+var graphics = new PIXI.Graphics();
+
+var container = new PIXI.Container();
+app.stage.addChild(container);
+
+var basicText = new PIXI.Text('基础文本');
+app.stage.addChild(basicText);
+
+var bg;
+
+
+
+PIXI.loader
+    .add('./images/bunny.png')
+    .add('./images/panda.png')
+    .add('./images/bg_rotate.jpg')
+    .on("progress", loadProgressHandler)
+    .load(setup);
+
+function loadProgressHandler(loader, resource) {
+    console.log("loading: " + resource.url, "progress: " + loader.progress + "%");
+}
+
+
+
+function setup() {
+    bg = new PIXI.Sprite(PIXI.loader.resources['./images/bg_rotate.jpg'].texture);
+    container.addChild(bg);
+
+    // container.x = (app.screen.width - container.width) / 2;
+    // container.y = (app.screen.height - container.height) / 2;
+
+    graphics.beginFill(0xff0000);
+    graphics.drawCircle (200, 200, 60);
+    graphics.endFill();
+    container.addChild(graphics);
+
+    container.mask = graphics;
+
+    // let ds = new PIXI.filters.DropShadowFilter();
+    // container.filters = [ds];
+
+    graphics.interactive = true;
+    graphics.buttonMode = true;
+    graphics.on('pointerdown', onDown);
+    graphics.on('pointerup', onUp);
+}
+
+function onDown() {
+    mouseDownStatus = true;
+}
+function onUp() {
+    mouseDownStatus = false;
+}
+
+
+
+app.ticker.add(function(delta) {
+    if (mouseDownStatus) {
+        shakeNum += 0.2;
+    }
+    else if(shakeNum>1) {
+        shakeNum -= shakeNum*0.1;
+    }
+    
+    if (basicText) {
+        basicText.text = ''+shakeNum;
+    }
+
+    if (graphics && bg) {
+        graphics.x = Math.random()*shakeNum;
+        graphics.y = Math.random()*shakeNum;
+
+        bg.x = Math.random()*shakeNum;
+        bg.y = Math.random()*shakeNum;
+    }
+});
+
+function resize() {
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+}
+
+resize();
+</script>
