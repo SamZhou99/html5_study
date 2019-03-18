@@ -68,10 +68,11 @@ function setup() {
     // let ds = new PIXI.filters.DropShadowFilter();
     // container.filters = [ds];
 
-    graphics.interactive = true;
+    container.interactive = graphics.interactive = true;
     graphics.buttonMode = true;
     graphics.on('pointerdown', onDown);
-    graphics.on('pointerup', onUp);
+    container.on('pointerup', onUp);
+    container.on('pointerout', onUp);
 }
 
 function onDown() {
@@ -90,6 +91,9 @@ app.ticker.add(function(delta) {
     else if(shakeNum>1) {
         shakeNum -= shakeNum*0.1;
     }
+    else{
+        shakeNum = 1;
+    }
     
     if (basicText) {
         basicText.text = ''+shakeNum;
@@ -99,8 +103,8 @@ app.ticker.add(function(delta) {
         graphics.x = Math.random()*shakeNum;
         graphics.y = Math.random()*shakeNum;
 
-        bg.x = Math.random()*shakeNum;
-        bg.y = Math.random()*shakeNum;
+        // bg.x = Math.random()*shakeNum;
+        // bg.y = Math.random()*shakeNum;
     }
 });
 
