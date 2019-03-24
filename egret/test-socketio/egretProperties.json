@@ -3,7 +3,7 @@
   "compilerVersion": "5.2.13",
   "template": {},
   "target": {
-    "current": "web"
+    "current": "ios"
   },
   "modules": [
     {
@@ -22,8 +22,15 @@
       "name": "promise"
     },
     {
-      "name":"socket.io",
-      "path":"../libSocket_5.2.3/bin/socket.io"
+      "name": "socket.io",
+      "path": "../libSocket_5.2.3/bin/socket.io"
     }
-  ]
+  ],
+  "targets": {
+    "ios": {
+      "appname": "test-socketio01",
+      "packagename": "com.sam.zhou.test.socketio01",
+      "hybrid": false
+    }
+  }
 }

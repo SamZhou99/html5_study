@@ -12,6 +12,7 @@
 		"bin-debug/DrawCircle.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
-		"bin-debug/Platform.js"
+		"bin-debug/Platform.js",
+		"bin-debug/TweenTest.js"
 	]
 }

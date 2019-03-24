@@ -3,7 +3,7 @@
   "compilerVersion": "5.2.13",
   "template": {},
   "target": {
-    "current": "web"
+    "current": "ios"
   },
   "modules": [
     {
@@ -24,5 +24,12 @@
     {
       "name": "promise"
     }
-  ]
+  ],
+  "targets": {
+    "ios": {
+      "appname": "testSprite7",
+      "packagename": "com.sam.zhou.TestSprite7",
+      "hybrid": false
+    }
+  }
 }

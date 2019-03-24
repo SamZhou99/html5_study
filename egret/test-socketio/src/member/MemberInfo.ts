@@ -42,7 +42,9 @@ class MemberInfo extends eui.Component implements eui.UIComponent {
 	}
 	public stopTime(): void {
 		clearInterval(this.temp1);
-		this.arcShp.graphics.clear();
+		if (this.arcShp) {
+			this.arcShp.graphics.clear();
+		}
 	}
 
 

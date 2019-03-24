@@ -41,29 +41,37 @@ class DrawCircle extends egret.Sprite {
 		// this.timeTxt.backgroundColor = 0x333333;
 		this.addChild(this.timeTxt);
 
+		this.timeTxt.touchEnabled = true;
+		this.timeTxt.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
 
-		var color: number = 0x33CCFF;        /// 光晕的颜色，十六进制，不包含透明度
-		var alpha: number = 1;             /// 光晕的颜色透明度，是对 color 参数的透明度设定。有效值为 0.0 到 1.0。例如，0.8 设置透明度值为 80%。
-		var blurX: number = 10;              /// 水平模糊量。有效值为 0 到 255.0（浮点）
-		var blurY: number = 10;              /// 垂直模糊量。有效值为 0 到 255.0（浮点）
-		var strength: number = 4;            /// 压印的强度，值越大，压印的颜色越深，而且发光与背景之间的对比度也越强。有效值为 0 到 255。暂未实现
-		var quality: number = egret.BitmapFilterQuality.HIGH;        /// 应用滤镜的次数，建议用 BitmapFilterQuality 类的常量来体现
-		var inner: boolean = false;            /// 指定发光是否为内侧发光，暂未实现
-		var knockout: boolean = false;            /// 指定对象是否具有挖空效果，暂未实现
-
-		var glowFilter: egret.GlowFilter = new egret.GlowFilter(color, alpha, blurX, blurY, strength, quality, inner, knockout);
-		this.filters = [glowFilter];
-
-		this.startTime();
+		// this.startTime();
+		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 	}
 
 	private onRemove() {
-		//
+		this.timeTxt.touchEnabled = false;
+		this.timeTxt.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
+		this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
 	}
 
+	private onTouchTap() {
+		console.log('点击了');
+		this.addThisFilter();
+	}
+
+	private angle = 0;
+	private onEnterFrame() {
+		this.drawArcLine(this.angle);
+		this.moveCircleDot(this.angle);
+		this.setTxt(String(1 + this.totalTime - Math.ceil(this.angle / 360 * this.totalTime)));
+		this.angle += this.angleTime;
+		if (this.angle >= 360) {
+			this.angle = 0;
+		}
+	}
+
+
 	private startTime() {
-
-
 		let angle = 0;
 		this.stopTime();
 		this.temp = setInterval(() => {
@@ -116,6 +124,21 @@ class DrawCircle extends egret.Sprite {
 		}
 
 		return this.lineColor[2];
+	}
+
+	private addThisFilter() {
+		console.log('addThisFilter');
+		var color: number = 0x33CCFF;        /// 光晕的颜色，十六进制，不包含透明度
+		var alpha: number = 1;             /// 光晕的颜色透明度，是对 color 参数的透明度设定。有效值为 0.0 到 1.0。例如，0.8 设置透明度值为 80%。
+		var blurX: number = 10;              /// 水平模糊量。有效值为 0 到 255.0（浮点）
+		var blurY: number = 10;              /// 垂直模糊量。有效值为 0 到 255.0（浮点）
+		var strength: number = 4;            /// 压印的强度，值越大，压印的颜色越深，而且发光与背景之间的对比度也越强。有效值为 0 到 255。暂未实现
+		var quality: number = egret.BitmapFilterQuality.HIGH;        /// 应用滤镜的次数，建议用 BitmapFilterQuality 类的常量来体现
+		var inner: boolean = false;            /// 指定发光是否为内侧发光，暂未实现
+		var knockout: boolean = false;            /// 指定对象是否具有挖空效果，暂未实现
+
+		var glowFilter: egret.GlowFilter = new egret.GlowFilter(color, alpha, blurX, blurY, strength, quality, inner, knockout);
+		this.filters = [glowFilter];
 	}
 
 }

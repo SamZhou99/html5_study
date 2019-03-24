@@ -134,8 +134,8 @@ class Main extends eui.UILayer {
 
         this.initEvent();
         this.initSocketIO();
-        // MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_LOGIN_PAGE, {}));
-        MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_GAME_PAGE, {}));
+        MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_LOGIN_PAGE, {}));
+        // MainEvent.DIS.dispatchEvent(new MainEvent(MainEvent.SHOW_GAME_PAGE, {}));
 
     }
     // /**
