@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>pixijs</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script type="text/javascript" src="./js/pixi.min.js"></script>
+    <script type="text/javascript" src="./js/my.js"></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+    function isZU(num) {
+        return !(String(num).indexOf('.') != -1);
+    }
+
+    function aaa(num) {
+        let a = []
+        for (let i = 2; i <= 1024; i++) {
+            if (isZU(num / i)) {
+                a.push(i);
+            }
+        }
+        console.log('aaa', a);
+        return a[Math.floor(a.length / 2)];
+    }
+
+    // const IMG = './images/temp-test.png';
+    const IMG = './images/bg_rotate.jpg';
+    var app = my.init(0x000000);
+
+    my.load([
+        IMG
+    ], onComplete);
+
+
+    function onComplete() {
+
+        let tempTexture = PIXI.TextureCache[IMG];
+        let ow = tempTexture.orig.width;
+        let oh = tempTexture.orig.height;
+        console.log('ow,oh', ow, oh);
+        let wlen = aaa(ow);
+        let hlen = aaa(oh);
+        console.log(wlen, hlen);
+        let minW = tempTexture.orig.width / wlen;
+        let minH = tempTexture.orig.height / hlen;
+        console.log(minW, minH);
+        let sp = new PIXI.Sprite(tempTexture);
+        sp.x = tempTexture.orig.width + 60;
+        app.stage.addChild(sp);
+
+        let spriteArr = [];
+        for (let y = 0; y < hlen; y++) {
+            for (let x = 0; x < wlen; x++) {
+                let texture = PIXI.TextureCache[IMG].clone();
+                texture.frame = new PIXI.Rectangle(x * minW, y * minH, minW, minH);
+                let sp = new PIXI.Sprite(texture);
+                spriteArr.push(sp);
+            }
+        }
+        console.log(spriteArr.length);
+        for (let y = 0; y < hlen; y++) {
+            for (let x = 0; x < wlen; x++) {
+                let index = Math.floor(spriteArr.length * Math.random());
+                // let index = spriteArr.length - 1;
+                let sp = spriteArr[index];
+                spriteArr.splice(index, 1);
+                sp.x = (minW + 0) * x;
+                sp.y = (minH + 0) * y;
+                app.stage.addChild(sp);
+            }
+        }
+
+    }
+
+</script>
