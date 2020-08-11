@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>播放示例-chplayer</title>
+    <meta name="keywords" content="flv,mp4,rtmp,html5,m3u8,播放器,视频流,网页视频播放器,dkvplayer,chplayer官网" />
+    <meta name="description" content="chplayer支持的视频格式：http协议的flv,mp4,m3u8及rtmp协议 " />
+    <meta name="author" content="chplayer" />
+    <meta name="copyright" content="http://www.chplayer.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/chplayer.js"></script>
+    <!-- <script src="https://wo99.oss-cn-qingdao.aliyuncs.com/scripts/jquery/3.2.1/jquery.min.js"></script> -->
+    <style>
+        .video{
+            background-color: darkgray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video" style="width: 600px; height: 400px;"></div>
+    <div>
+        <p><input id="url_txt" type="text" value="" placeholder="http://xxx/xxx.m3u8"></p>
+        <p><button id="play_btn">PLAY</button></p>
+    </div>
+    <script type="text/javascript">
+        //获取地址栏里传递过来的视频地址
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg); //匹配目标参数
+            if (r != null) return unescape(r[2]);
+            return null; //返回参数值
+        }
+        var videoUrl = getUrlParam('videourl');
+        var videoObject = {
+            container: 'video',
+            variable: 'player',
+            video: videoUrl,
+            html5m3u8: true,
+            logo: 'test',
+        };
+        var player = new chplayer(videoObject);
+
+        $('#play_btn').on('click', ()=>{
+            let url = $('#url_txt').val();
+            if(!url) return;
+            window.document.location.href = './?videourl='+url;
+        })
+    </script>
+</body>
+
+</html>
