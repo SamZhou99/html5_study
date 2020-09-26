@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100内加减法计算</title>
+    <style>
+        * {
+            font-family: Courier, monospace;
+        }
+
+        .font42 {
+            font-size: 6rem;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .bar {
+            width: 500px;
+            height: 6px;
+            margin: 10px;
+            background-color: rgb(255, 225, 0);
+        }
+
+        .bar-line {
+            width: 0%;
+            height: 100%;
+            background-color: red;
+        }
+
+        input {
+            text-align: center;
+            width: 200px;
+        }
+    </style>
+    <script src="https://wo99.oss-cn-qingdao.aliyuncs.com/scripts/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://wo99.oss-cn-qingdao.aliyuncs.com/scripts/vue/2.6.11/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>{[title]}</h1>
+        <h3>{[info]}</h3>
+        <h3>{[timeText]}</h3>
+
+        <div><button v-if='!starting' @click='onStart()'>开始</button></div>
+        <div><button v-if='starting' @click='onStop()'>停止</button></div>
+
+        <div v-if="starting">
+            <div class="bar">
+                <div class="bar-line"></div>
+            </div>
+            <span class="font42">{[n1]}</span>
+            <span class="font42">{[symbol]}</span>
+            <span class="font42">{[n2]}</span>
+            <span class="font42">=</span>
+            <span><input @keyup.enter="onEnter()" :disabled="resultDisabled" id="n3" class="font42" type="text"
+                    maxlength="2" v-model="result"></span>
+            <span class="font42">{[resultText]}</span>
+        </div>
+    </div>
+
+
+    <div>
+        <script>
+            let app = new Vue({
+                delimiters: ["{[", "]}"],
+                el: '#app',
+                data: {
+                    qIndex: 0,
+                    qMaxNum: 10,
+                    minNum: 1,
+                    maxNum: 20,
+                    timeIndex: 1,
+                    timeStep: 7000,
+                    n1: 0,
+                    n2: 0,
+                    n3: 0,
+                    symbol: '+',
+                    result: '',
+                    resultText: '',
+                    resultDisabled: false,
+
+                    starting: false,
+                    title: '',
+                    info: '',
+                    time: 0,
+                    timeText: '',
+
+                    tempTime: null,
+                    tempTimeNum: null,
+                    tempTimeout: null,
+                },
+                methods: {
+                    // 开始计时
+                    onStart() {
+                        this.onStop()
+                        this.starting = true
+                        this.calculation()
+
+                        this.time = new Date()
+                        this.tempTimeNum = setInterval(() => {
+                            let time = new Date().getTime() - this.time.getTime()
+                            let s = this.zero(Math.floor(time / 1000 % 60), 2)
+                            let m = this.zero(Math.floor(time / 1000 / 60 % 60), 2)
+                            let h = this.zero(Math.floor(time / 1000 / 60 / 60 % 24), 2)
+                            this.timeText = `计时：${h}:${m}:${s}`
+                        }, 1)
+                    },
+                    // 停止计时
+                    onStop() {
+                        this.starting = false
+                        clearInterval(this.tempTimeNum)
+                    },
+                    onEnter() {
+                        this.lockResultAndNextQT()
+                    },
+                    checkResult() {
+                        if (this.result == this.n3) {
+                            this.resultText = '💯'
+                        } else {
+                            this.resultText = '❌'
+                        }
+                    },
+                    lockResultAndNextQT() {
+                        clearTimeout(this.tempTimeout)
+                        this.checkResult()
+                        this.resultDisabled = true
+                        setTimeout(() => {
+                            this.calculation()
+                        }, 1000)
+                    },
+                    // 随机数
+                    random(min = 1, max = 100) {
+                        return min + Math.ceil(Math.random() * (max - min))
+                    },
+                    // 前面补零
+                    zero(num, max) {
+                        let s = String(num)
+                        if (s.length >= max)
+                            return num
+                        return '00000000'.substr(0, max - s.length) + s
+                    },
+                    // 出一道题
+                    calculation() {
+                        this.qIndex++
+                        this.info = `共${this.qMaxNum}题 当前第${this.qIndex}题`
+                        this.result = ''
+                        this.resultText = ''
+                        this.resultDisabled = false
+
+                        if (this.random(0, 10) >= 5) {
+                            this.symbol = '+'
+                            this.n3 = this.random(Math.floor(this.minNum / 2), this.maxNum)
+                            this.n1 = this.random(this.minNum, this.n3)
+                            this.n2 = this.n3 - this.n1
+                        } else {
+                            this.symbol = '-'
+                            this.n1 = this.random(Math.floor(this.maxNum / 2), this.maxNum - 1)
+                            this.n2 = this.random(this.minNum, this.n1)
+                            this.n3 = this.n1 - this.n2
+                        }
+
+                        setTimeout(() => {
+                            $('.bar-line').animate({ width: '0%' }, 0)
+                            $('.bar-line').animate({ width: '100%' }, this.timeStep)
+                            $('#n3').focus();
+                        }, 1)
+                        this.tempTimeout = setTimeout(() => {
+                            this.lockResultAndNextQT()
+                        }, this.timeStep)
+
+                    },
+                    // 初始化
+                    init() {
+                        this.title = `${this.maxNum}内 加减法 计算题`
+                        this.info = `共${this.qMaxNum}题 当前第${this.qIndex}题`
+                        this.timeText = `计时：00:00:00`
+                    }
+                },
+                mounted() {
+                    this.init();
+                }
+            });
+        </script>
+    </div>
+
+</body>
+
+</html>
